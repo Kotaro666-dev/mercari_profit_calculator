@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mercari_profit_calculator/utilities/constants.dart';
 
 class ShippingBtnActionHandler extends ChangeNotifier {
+  double shippingFee = 0;
+  String otherFeeTemp = kOtherFee;
+
   bool isRakuRakuClicked = false;
   bool isYuYuClicked = false;
   bool isOtherClicked = false;
@@ -13,8 +16,6 @@ class ShippingBtnActionHandler extends ChangeNotifier {
   Color otherTextColor = Colors.black;
   Color otherBGColor = Colors.white;
 
-  // String otherFeeTemp = kOtherFee;
-
   void initButton() {
     isRakuRakuClicked = false;
     isYuYuClicked = false;
@@ -25,7 +26,8 @@ class ShippingBtnActionHandler extends ChangeNotifier {
     yuyuBGColor = Colors.white;
     otherTextColor = Colors.black;
     otherBGColor = Colors.white;
-    // otherFeeTemp = kOtherFee;
+    shippingFee = 0;
+    otherFeeTemp = kOtherFee;
   }
 
   void setBtnBool(String target) {
@@ -44,7 +46,7 @@ class ShippingBtnActionHandler extends ChangeNotifier {
     }
   }
 
-  void updateBtnStyle() {
+  void updateShippingBtnStyle() {
     if (isRakuRakuClicked == true) {
       rakuRakuTextColor = Colors.white;
       rakurakuBGColor = kRakuRakuColor;
@@ -52,7 +54,6 @@ class ShippingBtnActionHandler extends ChangeNotifier {
       yuyuBGColor = Colors.white;
       otherTextColor = Colors.black;
       otherBGColor = Colors.white;
-      // otherFeeTemp = kOtherFee;
     } else if (isYuYuClicked == true) {
       rakuRakuTextColor = Colors.black;
       rakurakuBGColor = Colors.white;
@@ -60,7 +61,6 @@ class ShippingBtnActionHandler extends ChangeNotifier {
       yuyuBGColor = kYuYuColor;
       otherTextColor = Colors.black;
       otherBGColor = Colors.white;
-      // otherFeeTemp = kOtherFee;
     } else {
       rakuRakuTextColor = Colors.black;
       rakurakuBGColor = Colors.white;
@@ -69,5 +69,16 @@ class ShippingBtnActionHandler extends ChangeNotifier {
       otherTextColor = Colors.white;
       otherBGColor = kOtherColor;
     }
+  }
+
+  void updateOtherBtnWithStringOther() {
+    otherFeeTemp = kOtherFee;
+    notifyListeners();
+  }
+
+  void updateOtherBtnWithTypedNum(double num) {
+    shippingFee = num;
+    otherFeeTemp = shippingFee.round().toString();
+    notifyListeners();
   }
 }

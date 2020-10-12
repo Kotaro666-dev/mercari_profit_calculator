@@ -21,7 +21,7 @@ class ProfitScreen extends StatelessWidget {
         backgroundColor: kPrimaryColor,
         title: Text(
           "Profit History",
-          style: GoogleFonts.mPLUSRounded1c(
+          style: GoogleFonts.kosugiMaru(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
             textStyle: TextStyle(
@@ -125,7 +125,7 @@ class DateBox extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           "$year年$month月$day日",
-          style: GoogleFonts.mPLUSRounded1c(
+          style: GoogleFonts.kosugiMaru(
             fontSize: 18.0,
             textStyle: TextStyle(color: kThirdColor),
           ),
@@ -188,7 +188,7 @@ class ItemBox extends StatelessWidget {
                       child: Text(
                         "$itemName",
                         textAlign: TextAlign.left,
-                        style: GoogleFonts.mPLUSRounded1c(
+                        style: GoogleFonts.kosugiMaru(
                           fontSize: 14.0,
                           textStyle: TextStyle(
                             color: Colors.black,
@@ -207,7 +207,7 @@ class ItemBox extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Text(
                       "¥" + convertNumWithDot(profit),
-                      style: GoogleFonts.mPLUSRounded1c(
+                      style: GoogleFonts.kosugiMaru(
                         fontSize: 14.0,
                         textStyle: TextStyle(
                           color: Colors.black,

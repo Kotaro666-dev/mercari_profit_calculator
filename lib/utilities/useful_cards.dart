@@ -32,7 +32,7 @@ class ProfitCard extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   title,
-                  style: GoogleFonts.mPLUSRounded1c(
+                  style: GoogleFonts.kosugiMaru(
                     fontSize: 25.0,
                     fontWeight: FontWeight.bold,
                     textStyle: TextStyle(
@@ -49,7 +49,7 @@ class ProfitCard extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: Text(
                   "¥" + convertNumWithDot(profit),
-                  style: GoogleFonts.mPLUSRounded1c(
+                  style: GoogleFonts.kosugiMaru(
                     fontSize: 25.0,
                     fontWeight: FontWeight.bold,
                     textStyle: TextStyle(
@@ -75,7 +75,7 @@ class AddItemTextCard extends StatelessWidget {
     return Text(
       title,
       textAlign: TextAlign.left,
-      style: GoogleFonts.mPLUSRounded1c(
+      style: GoogleFonts.kosugiMaru(
         fontSize: 16.0,
         textStyle: TextStyle(
           color: Colors.black,
@@ -108,7 +108,7 @@ class _ShippingFeeCardState extends State<ShippingFeeCard> {
         child: RaisedButton(
           child: Text(
             widget.price,
-            style: GoogleFonts.mPLUSRounded1c(
+            style: GoogleFonts.kosugiMaru(
               fontSize: 16.0,
               textStyle: TextStyle(
                 color: widget.textColor,

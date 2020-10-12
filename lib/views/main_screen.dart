@@ -42,7 +42,7 @@ class MainScreen extends StatelessWidget {
           automaticallyImplyLeading: false,
           title: Text(
             'Mercari Profit Calculator',
-            style: GoogleFonts.mPLUSRounded1c(
+            style: GoogleFonts.kosugiMaru(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
               textStyle: TextStyle(

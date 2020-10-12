@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mercari_profit_calculator/views/add_item_screen.dart';
 import 'package:mercari_profit_calculator/utilities/constants.dart';
 import 'package:mercari_profit_calculator/utilities/textfield_library.dart';
 import 'package:provider/provider.dart';
 import 'package:mercari_profit_calculator/utilities/useful_cards.dart';
+import 'package:mercari_profit_calculator/models/shipping_btn_action.dart';
 
 double shippingFeeTemp = 0.0;
 
-class CustomizeShippingFeeScreen extends StatelessWidget {
+class ChooseOtherShippingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -57,9 +57,9 @@ class CustomizeShippingFeeScreen extends StatelessWidget {
                       ),
                       color: kFourthColor,
                       onPressed: () {
-                        Provider.of<OtherShippingFeeText>(context,
+                        Provider.of<ShippingBtnActionHandler>(context,
                                 listen: false)
-                            .updateOtherShippingFeeText(shippingFeeTemp);
+                            .updateOtherBtnWithTypedNum(shippingFeeTemp);
                         Navigator.pop(context);
                       },
                     ),

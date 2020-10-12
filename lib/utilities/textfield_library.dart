@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mercari_profit_calculator/utilities/constants.dart';
 import 'package:mercari_profit_calculator/views/add_item_screen.dart';
-import 'package:mercari_profit_calculator/views/customize_shipping_fee_screen.dart';
+import 'package:mercari_profit_calculator/views/other_shipping_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ItemNameTextField extends StatelessWidget {
@@ -17,7 +17,7 @@ class ItemNameTextField extends StatelessWidget {
         keyboardType: TextInputType.text,
         textAlign: TextAlign.center,
         maxLength: 30,
-        style: GoogleFonts.mPLUSRounded1c(
+        style: GoogleFonts.kosugiMaru(
           fontSize: 16.0,
           textStyle: TextStyle(
             color: Colors.black,
@@ -61,7 +61,7 @@ class SoldPriceTextField extends StatelessWidget {
         FilteringTextInputFormatter.digitsOnly,
       ],
       textAlign: TextAlign.center,
-      style: GoogleFonts.mPLUSRounded1c(
+      style: GoogleFonts.kosugiMaru(
         fontSize: 18.0,
         textStyle: TextStyle(
           color: Colors.black,
@@ -104,7 +104,7 @@ class ShippingFeeTextField extends StatelessWidget {
         FilteringTextInputFormatter.digitsOnly,
       ],
       textAlign: TextAlign.center,
-      style: GoogleFonts.mPLUSRounded1c(
+      style: GoogleFonts.kosugiMaru(
         fontSize: 18.0,
         textStyle: TextStyle(
           color: Colors.black,

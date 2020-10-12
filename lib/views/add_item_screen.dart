@@ -9,7 +9,7 @@ import 'package:mercari_profit_calculator/models/shipping_btn_action.dart';
 import 'package:mercari_profit_calculator/utilities/useful_cards.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:mercari_profit_calculator/utilities/alert_dialog_library.dart';
 
 String itemName = "";
 double soldPrice = 0;
@@ -102,7 +102,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ShippingCard(
+                      ShippingFeeCard(
                         price: kRakuRakuFee,
                         textColor: handler.rakuRakuTextColor,
                         bgColor: handler.rakurakuBGColor,
@@ -117,7 +117,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       SizedBox(
                         width: 10.0,
                       ),
-                      ShippingCard(
+                      ShippingFeeCard(
                         price: kYuYuFee,
                         textColor: handler.yuyuTextColor,
                         bgColor: handler.yuyuBGColor,
@@ -132,7 +132,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       SizedBox(
                         width: 10.0,
                       ),
-                      ShippingCard(
+                      ShippingFeeCard(
                         price: otherShippingFeeText.otherFeeTemp,
                         textColor: handler.otherTextColor,
                         bgColor: handler.otherBGColor,
@@ -260,37 +260,6 @@ class AddOrGoBackBtn extends StatelessWidget {
   }
 }
 
-class AlertDialogWithOneChoice extends StatelessWidget {
-  final title;
-  AlertDialogWithOneChoice({this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoAlertDialog(
-      title: Text(
-        "Error",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      content: Text("$title field is required."),
-      actions: <Widget>[
-        CupertinoDialogAction(
-          child: Text(
-            "OK",
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          isDestructiveAction: true,
-          onPressed: () => Navigator.pop(context),
-        ),
-      ],
-    );
-  }
-}
-
 class AddItemActionButton extends StatelessWidget {
   final String title;
   final Color color;
@@ -317,47 +286,6 @@ class AddItemActionButton extends StatelessWidget {
         ),
         color: color,
         onPressed: onPressed,
-      ),
-    );
-  }
-}
-
-class ShippingCard extends StatefulWidget {
-  String price;
-  Color textColor;
-  Color bgColor;
-  Function changeButtonEffect;
-
-  ShippingCard(
-      {this.price, this.textColor, this.bgColor, this.changeButtonEffect});
-  @override
-  _ShippingCardState createState() => _ShippingCardState();
-}
-
-class _ShippingCardState extends State<ShippingCard> {
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: ButtonTheme(
-        height: 45.0,
-        child: RaisedButton(
-          child: Text(
-            widget.price,
-            style: GoogleFonts.mPLUSRounded1c(
-              fontSize: 16.0,
-              textStyle: TextStyle(
-                color: widget.textColor,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.0,
-              ),
-            ),
-          ),
-          color: widget.bgColor,
-          // textColor: Colors.white,
-          textColor: widget.textColor,
-          shape: StadiumBorder(),
-          onPressed: widget.changeButtonEffect,
-        ),
       ),
     );
   }

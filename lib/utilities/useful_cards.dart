@@ -86,3 +86,44 @@ class AddItemTextCard extends StatelessWidget {
     );
   }
 }
+
+class ShippingFeeCard extends StatefulWidget {
+  final String price;
+  final Color textColor;
+  final Color bgColor;
+  final Function changeButtonEffect;
+
+  ShippingFeeCard(
+      {this.price, this.textColor, this.bgColor, this.changeButtonEffect});
+  @override
+  _ShippingFeeCardState createState() => _ShippingFeeCardState();
+}
+
+class _ShippingFeeCardState extends State<ShippingFeeCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ButtonTheme(
+        height: 45.0,
+        child: RaisedButton(
+          child: Text(
+            widget.price,
+            style: GoogleFonts.mPLUSRounded1c(
+              fontSize: 16.0,
+              textStyle: TextStyle(
+                color: widget.textColor,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.0,
+              ),
+            ),
+          ),
+          color: widget.bgColor,
+          // textColor: Colors.white,
+          textColor: widget.textColor,
+          shape: StadiumBorder(),
+          onPressed: widget.changeButtonEffect,
+        ),
+      ),
+    );
+  }
+}

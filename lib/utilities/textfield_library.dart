@@ -101,7 +101,7 @@ class ShippingFeeTextField extends StatelessWidget {
       maxLength: 6,
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[
-        WhitelistingTextInputFormatter.digitsOnly
+        FilteringTextInputFormatter.digitsOnly,
       ],
       textAlign: TextAlign.center,
       style: GoogleFonts.mPLUSRounded1c(

@@ -12,7 +12,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class MainScreen extends StatelessWidget {
   static const String pageID = 'main_screen';
   final _firestore = FirebaseFirestore.instance;
-  CalcProfitHistory calcProfitHistory = new CalcProfitHistory();
+  final CalcProfitHistory calcProfitHistory = new CalcProfitHistory();
 
   @override
   Widget build(BuildContext context) {

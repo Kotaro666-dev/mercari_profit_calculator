@@ -6,11 +6,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mercari_profit_calculator/models/profit_data.dart';
 import 'package:mercari_profit_calculator/utilities/useful_cards.dart';
+import 'package:mercari_profit_calculator/utilities/alert_dialog_library.dart';
 
 class ProfitScreen extends StatelessWidget {
   static const String pageID = 'profit_screen';
   final _firestore = FirebaseFirestore.instance;
-  CalcProfitHistory calcProfitHistory = new CalcProfitHistory();
+  final CalcProfitHistory calcProfitHistory = new CalcProfitHistory();
 
   @override
   Widget build(BuildContext context) {
@@ -153,47 +154,10 @@ class ItemBox extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) {
-              return CupertinoAlertDialog(
-                title: Text(
-                  'Delete "$itemName"?',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                content: Text(
-                    "This profit record will be permanently deleted from Profit History."),
-                actions: <Widget>[
-                  CupertinoDialogAction(
-                    child: Text(
-                      "CANCEL",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    isDestructiveAction: true,
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  CupertinoDialogAction(
-                    child: Text(
-                      "DELETE",
-                      style: TextStyle(
-                        color: Colors.red,
-                      ),
-                    ),
-                    onPressed: () async {
-                      _firestore
-                          .collection('test_user')
-                          .where("createdAt", isEqualTo: createdAt)
-                          .get()
-                          .then((snapshot) {
-                        snapshot.docs.first.reference.delete();
-                        Navigator.pop(context);
-                      });
-                    },
-                  ),
-                ],
-              );
+              return AlertDialogWithTwoChoices(
+                  itemName: itemName,
+                  firestore: _firestore,
+                  createdAt: createdAt);
             },
           );
         },

@@ -37,12 +37,6 @@ class ProfitScreen extends StatelessWidget {
             ),
             iconSize: 35.0,
             onPressed: () {
-              // Navigator.of(context, rootNavigator: true).push(
-              //   new CupertinoPageRoute<bool>(
-              //     fullscreenDialog: false,
-              //     builder: (BuildContext context) => new MainScreen(),
-              //   ),
-              // );
               Navigator.pushNamed(context, MainScreen.pageID);
             },
           ),

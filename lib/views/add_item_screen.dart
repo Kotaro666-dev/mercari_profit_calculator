@@ -20,6 +20,9 @@ void initInputInfo() {
   soldPrice = 0;
 }
 
+TextEditingController controllerItemName = TextEditingController();
+TextEditingController controllerSoldPrice = TextEditingController();
+
 class AddItemScreen extends StatefulWidget {
   @override
   _AddItemScreenState createState() => _AddItemScreenState();
@@ -35,6 +38,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
     super.initState();
     shipBtnEventHandler.initButton();
     initInputInfo();
+    controllerItemName.clear();
+    controllerSoldPrice.clear();
   }
 
   @override
@@ -68,7 +73,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
-                  child: ItemNameTextField(),
+                  child: ItemNameTextField(
+                    controller: controllerItemName,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
@@ -76,7 +83,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 15.0),
-                  child: SoldPriceTextField(),
+                  child: SoldPriceTextField(
+                    controller: controllerSoldPrice,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
@@ -163,7 +172,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   height: 20.0,
                 ),
                 AddOrGoBackBtn(
-                    handler: shipBtnEventHandler, firestore: _firestore),
+                    shipBtnEventHandler: shipBtnEventHandler,
+                    firestore: _firestore),
               ],
             ),
           ),
@@ -176,12 +186,12 @@ class _AddItemScreenState extends State<AddItemScreen> {
 class AddOrGoBackBtn extends StatelessWidget {
   const AddOrGoBackBtn({
     Key key,
-    @required this.handler,
+    @required this.shipBtnEventHandler,
     @required FirebaseFirestore firestore,
   })  : _firestore = firestore,
         super(key: key);
 
-  final ShippingBtnEventHandler handler;
+  final ShippingBtnEventHandler shipBtnEventHandler;
   final FirebaseFirestore _firestore;
   @override
   Widget build(BuildContext context) {
@@ -195,10 +205,12 @@ class AddOrGoBackBtn extends StatelessWidget {
             title: "GO BACK",
             color: kFourthColor,
             onPressed: () {
-              handler.initButton();
+              shipBtnEventHandler.initButton();
               initInputInfo();
               Provider.of<ShippingBtnEventHandler>(context, listen: false)
                   .updateOtherBtnWithStringOther();
+              controllerItemName.clear();
+              controllerSoldPrice.clear();
               Navigator.pop(context);
             },
           ),
@@ -220,9 +232,9 @@ class AddOrGoBackBtn extends StatelessWidget {
                     return AlertDialogWithOneChoice(title: "Sold Price");
                   },
                 );
-              } else if (handler.isRakuRakuClicked == false &&
-                  handler.isYuYuClicked == false &&
-                  handler.isOtherClicked == false) {
+              } else if (shipBtnEventHandler.isRakuRakuClicked == false &&
+                  shipBtnEventHandler.isYuYuClicked == false &&
+                  shipBtnEventHandler.isOtherClicked == false) {
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -230,26 +242,30 @@ class AddOrGoBackBtn extends StatelessWidget {
                   },
                 );
               } else {
-                profit = (soldPrice * 0.9) - handler.shippingFee;
+                profit = (soldPrice * 0.9) - shipBtnEventHandler.shippingFee;
                 // print(handler.shippingFee);
                 _firestore.collection('test_user').add({
                   'item_name': itemName,
                   'sold_price': soldPrice,
-                  'shippingFee': handler.shippingFee,
+                  'shippingFee': shipBtnEventHandler.shippingFee,
                   'profit': profit,
                   'createdAt': DateTime.now(),
                 });
-                handler.initButton();
+                shipBtnEventHandler.initButton();
                 initInputInfo();
                 Provider.of<ShippingBtnEventHandler>(context, listen: false)
                     .updateOtherBtnWithStringOther();
-                Navigator.of(context, rootNavigator: true).push(
+                Navigator.of(context, rootNavigator: true)
+                    .push(
                   new CupertinoPageRoute<bool>(
                     fullscreenDialog: true,
                     builder: (BuildContext context) => new ProfitScreen(),
                   ),
-                );
-                // Navigator.pushNamed(context, ProfitScreen.pageID);
+                )
+                    .then((value) {
+                  controllerItemName.clear();
+                  controllerSoldPrice.clear();
+                });
               }
             },
           ),

@@ -6,10 +6,14 @@ import 'package:mercari_profit_calculator/views/other_shipping_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ItemNameTextField extends StatelessWidget {
+  final TextEditingController controller;
+  ItemNameTextField({this.controller});
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: TextField(
+        controller: controller,
         autofocus: false,
         onChanged: (newValue) {
           itemName = newValue;
@@ -49,9 +53,13 @@ class ItemNameTextField extends StatelessWidget {
 }
 
 class SoldPriceTextField extends StatelessWidget {
+  final TextEditingController controller;
+  SoldPriceTextField({this.controller});
+
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       onChanged: (newValue) {
         soldPrice = double.parse(newValue);
       },

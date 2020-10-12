@@ -12,6 +12,5 @@ class AddData extends ChangeNotifier {
     itemTitle = "";
     soldPrice = 0;
     shippingFee = 0;
-    otherFeeTemp = kOtherFee;
   }
 }

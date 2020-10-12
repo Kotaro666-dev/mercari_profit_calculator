@@ -7,7 +7,14 @@ import 'package:mercari_profit_calculator/models/shipping_btn_action.dart';
 
 double shippingFeeTemp = 0.0;
 
-class ChooseOtherShippingScreen extends StatelessWidget {
+class OtherShippingScreen extends StatelessWidget {
+  const OtherShippingScreen({
+    Key key,
+    @required this.handler,
+  }) : super(key: key);
+
+  final ShippingBtnEventHandler handler;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -57,9 +64,12 @@ class ChooseOtherShippingScreen extends StatelessWidget {
                       ),
                       color: kFourthColor,
                       onPressed: () {
-                        Provider.of<ShippingBtnActionHandler>(context,
+                        Provider.of<ShippingBtnEventHandler>(context,
                                 listen: false)
                             .updateOtherBtnWithTypedNum(shippingFeeTemp);
+                        // TODO: It's bug!! Must fix in a better way!!
+                        // This assignment is added because AddOrGoBackBtn doesn't recognize the value of other shipping fee
+                        handler.shippingFee = shippingFeeTemp;
                         Navigator.pop(context);
                       },
                     ),

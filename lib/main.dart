@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ProfitData>(create: (context) => ProfitData()),
-        ChangeNotifierProvider<ShippingBtnActionHandler>(
-            create: (context) => ShippingBtnActionHandler()),
+        ChangeNotifierProvider<ShippingBtnEventHandler>(
+            create: (context) => ShippingBtnEventHandler()),
       ],
       child: MaterialApp(
         initialRoute: MainScreen.pageID,

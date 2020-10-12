@@ -26,13 +26,14 @@ class AddItemScreen extends StatefulWidget {
 }
 
 class _AddItemScreenState extends State<AddItemScreen> {
-  final ShippingBtnActionHandler handler = new ShippingBtnActionHandler();
+  final ShippingBtnEventHandler shipBtnEventHandler =
+      new ShippingBtnEventHandler();
   final _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
-    handler.initButton();
+    shipBtnEventHandler.initButton();
     initInputInfo();
   }
 
@@ -90,16 +91,17 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     children: [
                       ShippingFeeCard(
                         price: kRakuRakuFee,
-                        textColor: handler.rakuRakuTextColor,
-                        bgColor: handler.rakurakuBGColor,
+                        textColor: shipBtnEventHandler.rakuRakuTextColor,
+                        bgColor: shipBtnEventHandler.rakurakuBGColor,
                         changeButtonEffect: () {
                           setState(() {
-                            handler.setBtnBool(kRakuRakuFee);
-                            handler.updateShippingBtnStyle();
-                            Provider.of<ShippingBtnActionHandler>(context,
+                            shipBtnEventHandler.setBtnBool(kRakuRakuFee);
+                            shipBtnEventHandler.updateShippingBtnStyle();
+                            Provider.of<ShippingBtnEventHandler>(context,
                                     listen: false)
                                 .updateOtherBtnWithStringOther();
-                            handler.shippingFee = double.parse(kRakuRakuFee);
+                            shipBtnEventHandler.shippingFee =
+                                double.parse(kRakuRakuFee);
                           });
                         },
                       ),
@@ -108,16 +110,17 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       ),
                       ShippingFeeCard(
                         price: kYuYuFee,
-                        textColor: handler.yuyuTextColor,
-                        bgColor: handler.yuyuBGColor,
+                        textColor: shipBtnEventHandler.yuyuTextColor,
+                        bgColor: shipBtnEventHandler.yuyuBGColor,
                         changeButtonEffect: () {
                           setState(() {
-                            handler.setBtnBool(kYuYuFee);
-                            handler.updateShippingBtnStyle();
-                            Provider.of<ShippingBtnActionHandler>(context,
+                            shipBtnEventHandler.setBtnBool(kYuYuFee);
+                            shipBtnEventHandler.updateShippingBtnStyle();
+                            Provider.of<ShippingBtnEventHandler>(context,
                                     listen: false)
                                 .updateOtherBtnWithStringOther();
-                            handler.shippingFee = double.parse(kYuYuFee);
+                            shipBtnEventHandler.shippingFee =
+                                double.parse(kYuYuFee);
                           });
                         },
                       ),
@@ -125,15 +128,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         width: 10.0,
                       ),
                       ShippingFeeCard(
-                        price: Provider.of<ShippingBtnActionHandler>(context)
+                        price: Provider.of<ShippingBtnEventHandler>(context)
                             .otherFeeTemp,
-                        textColor: handler.otherTextColor,
-                        bgColor: handler.otherBGColor,
+                        textColor: shipBtnEventHandler.otherTextColor,
+                        bgColor: shipBtnEventHandler.otherBGColor,
                         changeButtonEffect: () {
                           setState(
                             () {
-                              handler.setBtnBool(kOtherFee);
-                              handler.updateShippingBtnStyle();
+                              shipBtnEventHandler.setBtnBool(kOtherFee);
+                              shipBtnEventHandler.updateShippingBtnStyle();
                               showModalBottomSheet(
                                 isScrollControlled: true,
                                 context: context,
@@ -143,7 +146,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
                                         bottom: MediaQuery.of(context)
                                             .viewInsets
                                             .bottom),
-                                    child: ChooseOtherShippingScreen(),
+                                    // child: ChooseOtherShippingScreen(),
+                                    child: OtherShippingScreen(
+                                        handler: shipBtnEventHandler),
                                   );
                                 },
                               );
@@ -157,7 +162,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 SizedBox(
                   height: 20.0,
                 ),
-                AddOrGoBackBtn(handler: handler, firestore: _firestore),
+                AddOrGoBackBtn(
+                    handler: shipBtnEventHandler, firestore: _firestore),
               ],
             ),
           ),
@@ -175,7 +181,7 @@ class AddOrGoBackBtn extends StatelessWidget {
   })  : _firestore = firestore,
         super(key: key);
 
-  final ShippingBtnActionHandler handler;
+  final ShippingBtnEventHandler handler;
   final FirebaseFirestore _firestore;
   @override
   Widget build(BuildContext context) {
@@ -191,7 +197,7 @@ class AddOrGoBackBtn extends StatelessWidget {
             onPressed: () {
               handler.initButton();
               initInputInfo();
-              Provider.of<ShippingBtnActionHandler>(context, listen: false)
+              Provider.of<ShippingBtnEventHandler>(context, listen: false)
                   .updateOtherBtnWithStringOther();
               Navigator.pop(context);
             },
@@ -225,6 +231,7 @@ class AddOrGoBackBtn extends StatelessWidget {
                 );
               } else {
                 profit = (soldPrice * 0.9) - handler.shippingFee;
+                // print(handler.shippingFee);
                 _firestore.collection('test_user').add({
                   'item_name': itemName,
                   'sold_price': soldPrice,
@@ -234,7 +241,7 @@ class AddOrGoBackBtn extends StatelessWidget {
                 });
                 handler.initButton();
                 initInputInfo();
-                Provider.of<ShippingBtnActionHandler>(context, listen: false)
+                Provider.of<ShippingBtnEventHandler>(context, listen: false)
                     .updateOtherBtnWithStringOther();
                 Navigator.of(context, rootNavigator: true).push(
                   new CupertinoPageRoute<bool>(

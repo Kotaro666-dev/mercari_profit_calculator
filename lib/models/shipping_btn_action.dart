@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mercari_profit_calculator/utilities/constants.dart';
 
-class ShippingBtnActionHandler extends ChangeNotifier {
+class ShippingBtnEventHandler extends ChangeNotifier {
   double shippingFee = 0;
   String otherFeeTemp = kOtherFee;
 

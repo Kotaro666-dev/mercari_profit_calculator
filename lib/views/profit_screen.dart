@@ -4,7 +4,6 @@ import 'package:mercari_profit_calculator/views/main_screen.dart';
 import 'package:mercari_profit_calculator/utilities/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:mercari_profit_calculator/models/profit_data.dart';
 import 'package:mercari_profit_calculator/utilities/useful_cards.dart';
 
@@ -84,7 +83,7 @@ class ProfitScreen extends StatelessWidget {
                     itemName: itemName,
                     soldPrice: soldPrice,
                     profit: profit,
-                    deleteInfo: Timestamp.fromDate(timeStamp),
+                    createdAt: Timestamp.fromDate(timeStamp),
                   );
                   if (currentMonth != timeStamp.month ||
                       currentDay != timeStamp.day) {
@@ -136,15 +135,14 @@ class DateBox extends StatelessWidget {
 }
 
 class ItemBox extends StatelessWidget {
-  // DateData dateData = new DateData();
   final _firestore = FirebaseFirestore.instance;
 
   final String itemName;
   final num soldPrice;
   final num profit;
-  final deleteInfo;
+  final createdAt;
 
-  ItemBox({this.itemName, this.soldPrice, this.profit, this.deleteInfo});
+  ItemBox({this.itemName, this.soldPrice, this.profit, this.createdAt});
 
   @override
   Widget build(BuildContext context) {
@@ -152,22 +150,52 @@ class ItemBox extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: GestureDetector(
         onLongPress: () async {
-          // TODO: FIND A WAY HOW TO DELETE ITEM BY TIMESTAMP
-          _firestore
-              .collection('test_user')
-              .where("item_name", isEqualTo: "$itemName")
-              .get()
-              .then((snapshot) {
-            snapshot.docs.first.reference.delete();
-          });
-          // print(deleteInfo);
-          // _firestore
-          //     .collection('test_user')
-          //     .where("createdAt", isEqualTo: "$deleteInfo")
-          //     .get()
-          //     .then((snapshot) {
-          //   snapshot.docs.first.reference.delete();
-          // });
+          showDialog(
+            context: context,
+            builder: (context) {
+              return CupertinoAlertDialog(
+                title: Text(
+                  'Delete "$itemName"?',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                content: Text(
+                    "This profit record will be permanently deleted from Profit History."),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: Text(
+                      "CANCEL",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    isDestructiveAction: true,
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  CupertinoDialogAction(
+                    child: Text(
+                      "DELETE",
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    ),
+                    onPressed: () async {
+                      _firestore
+                          .collection('test_user')
+                          .where("createdAt", isEqualTo: createdAt)
+                          .get()
+                          .then((snapshot) {
+                        snapshot.docs.first.reference.delete();
+                        Navigator.pop(context);
+                      });
+                    },
+                  ),
+                ],
+              );
+            },
+          );
         },
         child: Container(
           height: 60.0,
@@ -180,7 +208,7 @@ class ItemBox extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                flex: 5,
+                flex: 7,
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border(
@@ -190,12 +218,12 @@ class ItemBox extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "$itemName",
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.left,
                         style: GoogleFonts.mPLUSRounded1c(
                           fontSize: 14.0,
                           textStyle: TextStyle(
@@ -208,16 +236,15 @@ class ItemBox extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 5.0),
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Text(
                       "¥" + convertNumWithDot(profit),
-                      textAlign: TextAlign.left,
                       style: GoogleFonts.mPLUSRounded1c(
-                        fontSize: 16.0,
+                        fontSize: 14.0,
                         textStyle: TextStyle(
                           color: Colors.black,
                           letterSpacing: 1.0,

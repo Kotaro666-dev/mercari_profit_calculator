@@ -55,10 +55,10 @@ class SoldPriceTextField extends StatelessWidget {
       onChanged: (newValue) {
         soldPrice = double.parse(newValue);
       },
-      maxLength: 10,
+      maxLength: 7,
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[
-        WhitelistingTextInputFormatter.digitsOnly
+        FilteringTextInputFormatter.digitsOnly,
       ],
       textAlign: TextAlign.center,
       style: GoogleFonts.mPLUSRounded1c(

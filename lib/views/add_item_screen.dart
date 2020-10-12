@@ -210,46 +210,31 @@ class AddOrGoBackBtn extends StatelessWidget {
             title: "ADD",
             color: kPrimaryColor,
             onPressed: () async {
-              profit = (soldPrice * 0.9) - shippingFee;
               if (itemName.length == 0) {
-                AwesomeDialog(
-                    context: context,
-                    dialogType: DialogType.ERROR,
-                    animType: AnimType.RIGHSLIDE,
-                    headerAnimationLoop: false,
-                    title: 'Error',
-                    desc: 'Type something on Item Name',
-                    btnOkOnPress: () {},
-                    btnOkIcon: Icons.cancel,
-                    btnOkColor: Colors.red)
-                  ..show();
-              } else if (soldPrice <= 0) {
-                AwesomeDialog(
-                    context: context,
-                    dialogType: DialogType.ERROR,
-                    animType: AnimType.RIGHSLIDE,
-                    headerAnimationLoop: false,
-                    title: 'Error',
-                    desc: 'Invalid number on Sold Price',
-                    btnOkOnPress: () {},
-                    btnOkIcon: Icons.cancel,
-                    btnOkColor: Colors.red)
-                  ..show();
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialogWithOneChoice(title: "Item Name");
+                  },
+                );
+              } else if (soldPrice == 0) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialogWithOneChoice(title: "Sold Price");
+                  },
+                );
               } else if (handler.isRakuRakuClicked == false &&
                   handler.isYuYuClicked == false &&
                   handler.isOtherClicked == false) {
-                AwesomeDialog(
-                    context: context,
-                    dialogType: DialogType.ERROR,
-                    animType: AnimType.RIGHSLIDE,
-                    headerAnimationLoop: false,
-                    title: 'Error',
-                    desc: "You haven't chosen shipping fee",
-                    btnOkOnPress: () {},
-                    btnOkIcon: Icons.cancel,
-                    btnOkColor: Colors.red)
-                  ..show();
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialogWithOneChoice(title: "Shipping Fee");
+                  },
+                );
               } else {
+                profit = (soldPrice * 0.9) - shippingFee;
                 _firestore.collection('test_user').add({
                   'item_name': itemName,
                   'sold_price': soldPrice,
@@ -271,6 +256,37 @@ class AddOrGoBackBtn extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class AlertDialogWithOneChoice extends StatelessWidget {
+  final title;
+  AlertDialogWithOneChoice({this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoAlertDialog(
+      title: Text(
+        "Error",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      content: Text("$title field is required."),
+      actions: <Widget>[
+        CupertinoDialogAction(
+          child: Text(
+            "OK",
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          isDestructiveAction: true,
+          onPressed: () => Navigator.pop(context),
+        ),
+      ],
     );
   }
 }

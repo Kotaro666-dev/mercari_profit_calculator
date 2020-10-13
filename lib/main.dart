@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mercari_profit_calculator/views/main_screen.dart';
-import 'package:mercari_profit_calculator/views/profit_screen.dart';
+import 'package:mercari_profit_calculator/views/profit_history_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:mercari_profit_calculator/models/profit_data.dart';
 import 'package:mercari_profit_calculator/models/shipping_btn_data.dart';
 import 'package:mercari_profit_calculator/models/add_data.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, //縦固定
+  ]);
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -28,7 +34,7 @@ class MyApp extends StatelessWidget {
         initialRoute: MainScreen.pageID,
         routes: {
           MainScreen.pageID: (context) => MainScreen(),
-          ProfitScreen.pageID: (context) => ProfitScreen(),
+          ProfitHistoryScreen.pageID: (context) => ProfitHistoryScreen(),
         },
       ),
     );

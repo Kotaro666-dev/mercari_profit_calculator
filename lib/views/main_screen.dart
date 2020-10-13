@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mercari_profit_calculator/views/profit_screen.dart';
+import 'package:mercari_profit_calculator/views/profit_history_screen.dart';
 import 'package:mercari_profit_calculator/utilities/constants.dart';
 import 'package:mercari_profit_calculator/utilities/useful_cards.dart';
 import 'package:mercari_profit_calculator/views/add_item_screen.dart';
@@ -32,7 +32,7 @@ class MainScreen extends StatelessWidget {
                   return SingleChildScrollView(
                     padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: AddItemScreen(),
+                    child: AddProfitScreen(),
                   );
                 });
           },
@@ -56,7 +56,7 @@ class MainScreen extends StatelessWidget {
               iconSize: 30.0,
               color: Colors.white,
               onPressed: () {
-                Navigator.pushNamed(context, ProfitScreen.pageID);
+                Navigator.pushNamed(context, ProfitHistoryScreen.pageID);
               },
             ),
           ],

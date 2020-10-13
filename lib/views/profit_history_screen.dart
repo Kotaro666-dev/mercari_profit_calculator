@@ -8,8 +8,8 @@ import 'package:mercari_profit_calculator/models/profit_data.dart';
 import 'package:mercari_profit_calculator/utilities/useful_cards.dart';
 import 'package:mercari_profit_calculator/utilities/alert_dialog_library.dart';
 
-class ProfitScreen extends StatelessWidget {
-  static const String pageID = 'profit_screen';
+class ProfitHistoryScreen extends StatelessWidget {
+  static const String pageID = 'profit_history_screen';
   final _firestore = FirebaseFirestore.instance;
   final CalcProfitHistory calcProfitHistory = new CalcProfitHistory();
 

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mercari_profit_calculator/models/add_data.dart';
 import 'package:mercari_profit_calculator/utilities/alert_dialog_library.dart';
-import 'package:mercari_profit_calculator/views/profit_screen.dart';
+import 'package:mercari_profit_calculator/views/profit_history_screen.dart';
 import 'package:mercari_profit_calculator/utilities/constants.dart';
 import 'package:mercari_profit_calculator/views/other_shipping_screen.dart';
 import 'package:mercari_profit_calculator/utilities/textfield_library.dart';
@@ -15,12 +15,12 @@ import 'package:google_fonts/google_fonts.dart';
 TextEditingController controllerItemName = TextEditingController();
 TextEditingController controllerSoldPrice = TextEditingController();
 
-class AddItemScreen extends StatefulWidget {
+class AddProfitScreen extends StatefulWidget {
   @override
-  _AddItemScreenState createState() => _AddItemScreenState();
+  _AddProfitScreenState createState() => _AddProfitScreenState();
 }
 
-class _AddItemScreenState extends State<AddItemScreen> {
+class _AddProfitScreenState extends State<AddProfitScreen> {
   final ShippingBtnEventHandler shipBtnEventHandler =
       new ShippingBtnEventHandler();
   final AddData addData = AddData();
@@ -258,7 +258,8 @@ class AddOrGoBackBtn extends StatelessWidget {
                     .push(
                   new CupertinoPageRoute<bool>(
                     fullscreenDialog: true,
-                    builder: (BuildContext context) => new ProfitScreen(),
+                    builder: (BuildContext context) =>
+                        new ProfitHistoryScreen(),
                   ),
                 )
                     .then((value) {

@@ -1,16 +1,15 @@
 # mercari_profit_calculator
 
-A new Flutter application.
+This is my very first Flutter App. This idea was inspired by my wife, who loves Mercari: 
+one of the most famous Flea market apps in Japan.
 
-## Getting Started
+## Images
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Flow Chart
+![alt](images/appFlowChart.jpg)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Presentation video
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Please visit this Youtube link:
+[Presentation](https://www.youtube.com/watch?v=pC3CcviVKew)

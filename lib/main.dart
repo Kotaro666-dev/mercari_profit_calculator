@@ -4,7 +4,8 @@ import 'package:mercari_profit_calculator/views/profit_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:mercari_profit_calculator/models/profit_data.dart';
-import 'package:mercari_profit_calculator/models/shipping_btn_action.dart';
+import 'package:mercari_profit_calculator/models/shipping_btn_data.dart';
+import 'package:mercari_profit_calculator/models/add_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +21,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ProfitData>(create: (context) => ProfitData()),
         ChangeNotifierProvider<ShippingBtnEventHandler>(
             create: (context) => ShippingBtnEventHandler()),
+        ChangeNotifierProvider<AddData>(create: (context) => AddData()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         initialRoute: MainScreen.pageID,
         routes: {
           MainScreen.pageID: (context) => MainScreen(),
@@ -31,20 +34,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return ChangeNotifierProvider(
-//       create: (context) => ProfitData(),
-//       child: MaterialApp(
-//         debugShowCheckedModeBanner: false,
-//         initialRoute: MainScreen.pageID,
-//         routes: {
-//           MainScreen.pageID: (context) => MainScreen(),
-//           ProfitScreen.pageID: (context) => ProfitScreen(),
-//         },
-//       ),
-//     );
-//   }
-// }

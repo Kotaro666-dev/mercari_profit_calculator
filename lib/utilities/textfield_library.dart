@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mercari_profit_calculator/models/add_data.dart';
 import 'package:mercari_profit_calculator/utilities/constants.dart';
-import 'package:mercari_profit_calculator/views/add_item_screen.dart';
 import 'package:mercari_profit_calculator/views/other_shipping_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ItemNameTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -16,7 +17,7 @@ class ItemNameTextField extends StatelessWidget {
         controller: controller,
         autofocus: false,
         onChanged: (newValue) {
-          itemName = newValue;
+          Provider.of<AddData>(context, listen: false).updateItemName(newValue);
         },
         keyboardType: TextInputType.text,
         textAlign: TextAlign.center,
@@ -61,7 +62,8 @@ class SoldPriceTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       onChanged: (newValue) {
-        soldPrice = double.parse(newValue);
+        Provider.of<AddData>(context, listen: false)
+            .updateSoldPrice(double.parse(newValue));
       },
       maxLength: 7,
       keyboardType: TextInputType.number,

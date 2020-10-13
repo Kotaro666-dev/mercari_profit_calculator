@@ -1,24 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mercari_profit_calculator/models/add_data.dart';
+import 'package:mercari_profit_calculator/utilities/alert_dialog_library.dart';
 import 'package:mercari_profit_calculator/views/profit_screen.dart';
 import 'package:mercari_profit_calculator/utilities/constants.dart';
 import 'package:mercari_profit_calculator/views/other_shipping_screen.dart';
 import 'package:mercari_profit_calculator/utilities/textfield_library.dart';
 import 'package:provider/provider.dart';
-import 'package:mercari_profit_calculator/models/shipping_btn_action.dart';
+import 'package:mercari_profit_calculator/models/shipping_btn_data.dart';
 import 'package:mercari_profit_calculator/utilities/useful_cards.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mercari_profit_calculator/utilities/alert_dialog_library.dart';
-
-String itemName = "";
-double soldPrice = 0;
-double profit = 0;
-
-void initInputInfo() {
-  itemName = "";
-  soldPrice = 0;
-}
 
 TextEditingController controllerItemName = TextEditingController();
 TextEditingController controllerSoldPrice = TextEditingController();
@@ -31,13 +23,12 @@ class AddItemScreen extends StatefulWidget {
 class _AddItemScreenState extends State<AddItemScreen> {
   final ShippingBtnEventHandler shipBtnEventHandler =
       new ShippingBtnEventHandler();
+  final AddData addData = AddData();
   final _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
-    shipBtnEventHandler.initButton();
-    initInputInfo();
     controllerItemName.clear();
     controllerSoldPrice.clear();
   }
@@ -173,6 +164,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 ),
                 AddOrGoBackBtn(
                     shipBtnEventHandler: shipBtnEventHandler,
+                    addData: addData,
                     firestore: _firestore),
               ],
             ),
@@ -187,11 +179,13 @@ class AddOrGoBackBtn extends StatelessWidget {
   const AddOrGoBackBtn({
     Key key,
     @required this.shipBtnEventHandler,
+    @required this.addData,
     @required FirebaseFirestore firestore,
   })  : _firestore = firestore,
         super(key: key);
 
   final ShippingBtnEventHandler shipBtnEventHandler;
+  final AddData addData;
   final FirebaseFirestore _firestore;
   @override
   Widget build(BuildContext context) {
@@ -206,7 +200,7 @@ class AddOrGoBackBtn extends StatelessWidget {
             color: kFourthColor,
             onPressed: () {
               shipBtnEventHandler.initButton();
-              initInputInfo();
+              Provider.of<AddData>(context, listen: false).initInputInfo();
               Provider.of<ShippingBtnEventHandler>(context, listen: false)
                   .updateOtherBtnWithStringOther();
               controllerItemName.clear();
@@ -218,6 +212,10 @@ class AddOrGoBackBtn extends StatelessWidget {
             title: "ADD",
             color: kPrimaryColor,
             onPressed: () async {
+              String itemName =
+                  Provider.of<AddData>(context, listen: false).itemName;
+              double soldPrice =
+                  Provider.of<AddData>(context, listen: false).soldPrice;
               if (itemName.length == 0) {
                 showDialog(
                   context: context,
@@ -242,17 +240,18 @@ class AddOrGoBackBtn extends StatelessWidget {
                   },
                 );
               } else {
-                profit = (soldPrice * 0.9) - shipBtnEventHandler.shippingFee;
+                addData.profit =
+                    (soldPrice * 0.9) - shipBtnEventHandler.shippingFee;
                 // print(handler.shippingFee);
                 _firestore.collection('test_user').add({
                   'item_name': itemName,
                   'sold_price': soldPrice,
                   'shippingFee': shipBtnEventHandler.shippingFee,
-                  'profit': profit,
+                  'profit': addData.profit,
                   'createdAt': DateTime.now(),
                 });
                 shipBtnEventHandler.initButton();
-                initInputInfo();
+                Provider.of<AddData>(context, listen: false).initInputInfo();
                 Provider.of<ShippingBtnEventHandler>(context, listen: false)
                     .updateOtherBtnWithStringOther();
                 Navigator.of(context, rootNavigator: true)

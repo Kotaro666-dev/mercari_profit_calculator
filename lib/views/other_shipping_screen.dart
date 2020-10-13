@@ -3,7 +3,7 @@ import 'package:mercari_profit_calculator/utilities/constants.dart';
 import 'package:mercari_profit_calculator/utilities/textfield_library.dart';
 import 'package:provider/provider.dart';
 import 'package:mercari_profit_calculator/utilities/useful_cards.dart';
-import 'package:mercari_profit_calculator/models/shipping_btn_action.dart';
+import 'package:mercari_profit_calculator/models/shipping_btn_data.dart';
 
 double shippingFeeTemp = 0.0;
 

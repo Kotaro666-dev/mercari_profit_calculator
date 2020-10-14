@@ -6,9 +6,9 @@ one of the most famous Flea market apps in Japan.
 It's super simple app:
 
 1. You can check your profit report by total, month and today on Main Page
-2. You click 'add' icon and type item name, sold price and shipping fee.
-3. You click ADD and then your new profit data is sent to the database.
-4. You can check your profit history so far in the order of latest dates.
+2. You click 'add' icon and type item name, sold price and shipping fee on Add Profit Page.
+3. You click ADD and then your new profit data is sent to the database on Add Profit Page.
+4. You can check your profit history so far in the order of latest dates on Profit Histroy Page.
 
 This app is connected with Google Cloud Database. Therefore, you can always get latest update from database within a second.
 
